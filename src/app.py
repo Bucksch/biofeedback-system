@@ -43,8 +43,17 @@ def index():
     eda_visualization = eda.get_visualization(1)
     eda_features_html = eda.get_features_html()
 
-    return render_template('index.html', eda_visualization=eda_visualization, eda_features_html=eda_features_html)
-    pass
+    return render_template(
+        'index.html',
+        eda_visualization=eda_visualization,
+        eda_features_html=eda_features_html,
+        edr_amplitude=eda_features.get('EDR Amplitude'),
+        edr_rising_time=eda_features.get('EDR Rising Time (Rise Time)'),
+        edr_response_peak=eda_features.get('EDR Response Peak (Peak Time)'),
+        latency_to_stimulus=eda_features.get('Latency to Stimulus (onset)'),
+        recovery_time_50=eda_features.get('Recovery Time to 50% Amplitude'),
+        recovery_time_63=eda_features.get('Recovery Time to 63% Amplitude')
+    )
 
 if __name__ == '__main__':
     app.run()

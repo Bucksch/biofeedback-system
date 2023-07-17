@@ -104,6 +104,32 @@
                     />
                 </div>
             </div>
+            <div class="widget-box sample-widget">
+                <div class="widget-header">
+                    <h2>Extracted Electrodermal Response (EDR) Features</h2>
+                    <i class="fa fa-cog"></i>
+                </div>
+                <div class="widget-content">
+                    <ul>
+                        <li>EDR Amplitude: {{ edr_amplitude | safe }}</li>
+                        <li>EDR Rising Time (Rise Time): {{ edr_rising_time | safe }}</li>
+                        <li>EDR Response Peak (Peak Time): {{ edr_response_peak | safe }}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="widget-box sample-widget">
+                <div class="widget-header">
+                    <h2>Extracted Features to Latency and Recovery Time</h2>
+                    <i class="fa fa-cog"></i>
+                </div>
+                <div class="widget-content">
+                    <ul>
+                        <li>Latency to Stimulus: {{ latency_to_stimulus | safe }}</li>
+                        <li>Recovery Time to 50% Amplitude: {{ recovery_time_50 | safe }}</li>
+                        <li>Recovery Time to 63% Amplitude: {{ recovery_time_63 | safe }}</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </section>
 

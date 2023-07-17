@@ -112,28 +112,28 @@ class EDASignal(Signal):
         signal_2nd_der = diff(diff(self.signal_data))
         response_sample = argmax(signal_2nd_der)
         response_time = response_sample / self.sampling_rate
-        param_dict["Latency to stimulus onset"] = response_time
+        param_dict["Latency to Stimulus (onset)"] = response_time
 
         # EDR amplitude
         eda_max = max(self.signal_data)
         eda_basal = self.signal_data[response_sample]
-        param_dict["EDR amplitude"] = eda_max - eda_basal
+        param_dict["EDR Amplitude"] = eda_max - eda_basal
 
         # EDR rising time (Rise Time)
         eda_max_sample = argmax(self.signal_data)
         eda_max_time = eda_max_sample / self.sampling_rate
-        param_dict["EDR rising time (Rise Time)"] = eda_max_time - response_time
+        param_dict["EDR Rising Time (Rise Time)"] = eda_max_time - response_time
 
         # EDR response peak (Peak Time)
-        param_dict["EDR response peak (Peak Time)"] = eda_max_time
+        param_dict["EDR Response Peak (Peak Time)"] = eda_max_time
 
         # Recovery time to 50% amplitude
         time_50 = self._calculate_recovery_time(eda_max, 0.50, param_dict)
-        param_dict["Recovery time to 50% amplitude"] = time_50 - eda_max_time if time_50 is not None else None
+        param_dict["Recovery Time to 50% Amplitude"] = time_50 - eda_max_time if time_50 is not None else None
 
         # Recovery time to 63% amplitude
         time_63 = self._calculate_recovery_time(eda_max, 0.63, param_dict)
-        param_dict["Recovery time to 63% amplitude"] = time_63 - eda_max_time if time_63 is not None else None
+        param_dict["Recovery Time to 63% Amplitude"] = time_63 - eda_max_time if time_63 is not None else None
         
         self.features = param_dict
 
@@ -142,7 +142,7 @@ class EDASignal(Signal):
     def _calculate_recovery_time(self, eda_max, amplitude_ratio, param_dict):
         start_index = argmax(self.signal_data)
         for i in range(start_index, len(self.signal_data)):
-            if self.signal_data[i] <= eda_max - amplitude_ratio * param_dict["EDR amplitude"]:
+            if self.signal_data[i] <= eda_max - amplitude_ratio * param_dict["EDR Amplitude"]:
                 return i / self.sampling_rate
         return None
     
