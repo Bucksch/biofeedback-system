@@ -1,10 +1,112 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Index</title>
+    <title>Dashboard</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
-    <h1>Welcome to the Index Page</h1>
+    <!-- Sidebar -->
+    <section id="sidebar">
+        <div class="white-label"></div>
+        <div id="sidebar-nav">
+            <ul>
+                <li class="active"><a href="#"><img src="static/icons/dashboard.svg"> Dashboard</a></li>
+                <li><a href="#"><img src="static/icons/wiki.svg"> Wiki</a></li>
+                <li><a href="#"><img src="static/icons/bug.svg"> Report a Bug</a></li>
+                <li><a href="#"><img src="static/icons/contact.svg"> Contact</a></li>
+            </ul>
+        </div>
+    </section>
+    
+    <!-- Content -->
+    <section id="content">
+        <div id="header">
+            <div class="header-nav">
+                <div class="menu-button"><!--<i class="fa fa-navicon"></i>--></div>
+                <div class="nav">
+                    <ul>
+                        <li class="nav-settings">
+                            <div class="font-icon"><i class="fa fa-tasks"></i></div>
+                        </li>
+                        <li class="nav-calendar">
+                            <div class="font-icon">
+                                <i class="fa fa-calendar"></i>
+                            </div>
+                        </li>
+                        <li class="nav-chat">
+                            <div class="font-icon">
+                                <i class="fa fa-comments-o"></i>
+                            </div>
+                        </li>
+                        <li class="nav-profile">
+                            <div class="nav-profile-image">
+                                <img
+                                    src="/static/media/profile.png"
+                                    alt="profile-img"
+                                    alt="profile image"
+                                />
+                                <div class="nav-profile-name">
+                                    Jonas Bucksch<i class="fa fa-caret-down"></i>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="content-header">
+                <h1>Dashboard</h1>
+                <p>Design Bio-Feedback System to improve economic decision-making processes.</p>
+            </div>
+            <div class="widget-box sample-widget">
+                <div class="widget-header">
+                    <h2>Raw Signal (Electrodermal Response)</h2>
+                    <i class="fa fa-cog"></i>
+                </div>
+                <div class="widget-content">
+                    <img
+                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/87118/sample-data-1.png"
+                    />
+                </div>
+            </div>
+            <div class="widget-box sample-widget">
+                <div class="widget-header">
+                    <h2>Comparison between filtered and unfiltered signals</h2>
+                    <i class="fa fa-cog"></i>
+                </div>
+                <div class="widget-content">
+                    <img
+                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/87118/sample-data-1.png"
+                    />
+                </div>
+            </div>
+            <div class="widget-box sample-widget">
+                <div class="widget-header">
+                    <h2>Signal reconstruction through an inverse SWT</h2>
+                    <i class="fa fa-cog"></i>
+                </div>
+                <div class="widget-content">
+                    <img
+                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/87118/sample-data-1.png"
+                    />
+                </div>
+            </div>
+            <div class="widget-box sample-widget">
+                <div class="widget-header">
+                    <h2>Smoothed Signal</h2>
+                    <i class="fa fa-cog"></i>
+                </div>
+                <div class="widget-content">
+                    <img
+                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/87118/sample-data-1.png"
+                    />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

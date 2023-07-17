@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="toggle-btn" onclick="toggleMenu()"></div>
+        <ul class="menu">
+            <!-- Sidebar menu items -->
+            <li>Menu Item 1</li>
+            <li>Menu Item 2</li>
+            <li>Menu Item 3</li>
+        </ul>
+    </div>
+    
+    <!-- Content -->
+    <div class="content">
+        <h1>Welcome to the Index Page</h1>
+
+        <!-- Display extracted features -->
+        {{ eda_features_html | safe }}
+        
+        <div class="grid">
+            <!-- Grid items -->
+            <div class="grid-item">
+                <h2>Visualization 1</h2>
+                <!-- Place Python visualization code here using Jinja2 -->
+                {{ eda_visualization | safe }}
+            </div>
+            <div class="grid-item">
+                <h2>Visualization 2</h2>
+                <!-- Place Python visualization code here using Jinja2 -->
+            </div>
+            <div class="grid-item">
+                <h2>Visualization 3</h2>
+                <!-- Place Python visualization code here using Jinja2 -->
+            </div>
+            <!-- Repeat for other grid items -->
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='main.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+/* main.css */
+
+/* Sidebar */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 100vh;
+    background-color: #f1f1f1;
+    padding: 20px;
+    transition: transform 0.3s ease-in-out; /* Added transition property */
+    transform: translateX(-200px); /* Initially hide the sidebar */
+}
+
+.sidebar.active {
+    transform: translateX(0); /* Show the sidebar when active class is present */
+}
+
+.sidebar .toggle-btn {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 20px;
+    height: 20px;
+    background-color: #333;
+    cursor: pointer;
+}
+
+.sidebar .menu {
+    margin-top: 40px;
+    list-style: none;
+}
+
+.sidebar .menu li {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+/* Content */
+.content {
+    margin-left: 200px;
+    padding: 20px;
+}
+
+.content .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+}
+
+.content .grid-item {
+    background-color: #f1f1f1;
+    padding: 20px;
+}
+
+/* Additional styling for visualizations can be added here */
+
+/* Example styling for visualization 1 */
+.content .grid-item:nth-child(1) {
+    background-color: #ff8080;
+}
+
+/* Example styling for visualization 2 */
+.content .grid-item:nth-child(2) {
+    background-color: #80ff80;
+}
+
+/* Example styling for visualization 3 */
+.content .grid-item:nth-child(3) {
+    background-color: #8080ff;
+}
+
+/* Feature List */
+ul.feature-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .feature-list li {
+    margin-bottom: 10px;
+  }
+  
+  .feature-list li::before {
+    content: "•";
+    margin-right: 5px;
+    color: #555;
+  }
+  
+  /* Feature Value */
+  .feature-value {
+    font-weight: bold;
+  }
