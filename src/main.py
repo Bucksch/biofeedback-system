@@ -6,8 +6,8 @@ from processing.eda.eda_signal import EDASignal
 
 def main():
     # Load the signal data
-    signal_data_ecg = Signal.load_signal("../signals/staticopensignalsdata.txt", "CH1")
-    signal_data_eda = Signal.load_signal("../signals/staticopensignalsdata.txt", "CH5")
+    signal_data_ecg = Signal.load_static_signal("../signals/staticopensignalsdata.txt", "CH1")
+    signal_data_eda = Signal.load_static_signal("../signals/staticopensignalsdata.txt", "CH5")
     
     # Create instances of ECGSignal and EDASignal
     ecg = ECGSignal(signal_data_ecg.signal_data, signal_data_ecg.sampling_rate)

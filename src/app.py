@@ -2,14 +2,15 @@ from flask import Flask, render_template
 from processing.signal import Signal
 from processing.ecg.ecg_signal import ECGSignal
 from processing.eda.eda_signal import EDASignal
+from database import get_database_connection, insert_signal_data, insert_extracted_feature
 
 app = Flask(__name__)
 
 @app.route('/')
 def home():
     # Load the signal data
-    signal_data_ecg = Signal.load_signal("../signals/staticopensignalsdata.txt", "CH1")
-    signal_data_eda = Signal.load_signal("../signals/staticopensignalsdata.txt", "CH5")
+    signal_data_ecg = Signal.load_static_signal("../signals/staticopensignalsdata.txt", "CH1")
+    signal_data_eda = Signal.load_static_signal("../signals/staticopensignalsdata.txt", "CH5")
 
     # Create instances of ECGSignal and EDASignal
     ecg = ECGSignal(signal_data_ecg.signal_data, signal_data_ecg.sampling_rate)
@@ -25,6 +26,18 @@ def home():
 
     # Accessing the extracted features
     eda.print_features()
+    
+    connection = get_database_connection()
+
+    # Store preprocessed signal data in the database
+    # for time, value in eda:
+    #     insert_signal_data(connection, time, value)
+
+    # Store extracted features in the database
+    for feature, value in eda_features.items():
+        insert_extracted_feature(connection, feature, value)
+
+    connection.close()
 
     # Get the visualization and features HTML code
     eda_visualization = eda.get_visualization(1)

@@ -6,8 +6,8 @@ class Signal:
         self.sampling_rate = sampling_rate
         
     @classmethod
-    def load_signal(cls, path: str, channel: str) -> 'Signal':
-        print(f"Loading Signal Data from Channel {channel}...")
+    def load_static_signal(cls, path: str, channel: str) -> 'Signal':
+        print(f"Loading signal data from channel {channel}...")
         # Load entire acquisition data.
         try:
             data, header = bsnb.load(path, get_header=True)
