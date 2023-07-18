@@ -4,6 +4,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="{{ bokeh_js | safe}}" type="text/javascript"></script>
 </head>
 <body>
     <!-- Sidebar -->
@@ -58,81 +59,51 @@
         <div class="content">
             <div class="content-header">
                 <h1>Dashboard</h1>
-                <p>Design Bio-Feedback System to improve economic decision-making processes.</p>
+                <p>Positive Information Systems Seminar: Design Bio-Feedback System to Improve Economic Decision-Making Processes.</p>
             </div>
-            <div class="widget-box sample-widget">
-                <div class="widget-header">
-                    <h2>Raw Signal (Electrodermal Response)</h2>
-                    <i class="fa fa-cog"></i>
+            <div class="row">
+                {% for scatter_div, scatter_script in scatter_divs | pair(scatter_scripts) %}
+                <div class="widget-box sample-widget">
+                    <div class="widget-header">
+                        <h2>Step {{ loop.index }}</h2>
+                        <i class="fa fa-cog"></i>
+                    </div>
+                    <div class="widget-content">
+                        <div class="bokeh-plot">
+                            {{ scatter_div | safe }}
+                        </div>
+                        {{ scatter_script | safe }}
+                    </div>
                 </div>
-                <div class="widget-content">
-                    <img
-                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/87118/sample-data-1.png"
-                    />
+                {% endfor %}
+                <div class="widget-box sample-widget">
+                    <div class="widget-header">
+                        <h2>Extracted Electrodermal Response (EDR) Features</h2>
+                        <i class="fa fa-cog"></i>
+                    </div>
+                    <div class="widget-content">
+                        <ul>
+                            <li>EDR Amplitude: {{ edr_amplitude | safe }}</li>
+                            <li>EDR Rising Time (Rise Time): {{ edr_rising_time | safe }}</li>
+                            <li>EDR Response Peak (Peak Time): {{ edr_response_peak | safe }}</li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="widget-box sample-widget">
-                <div class="widget-header">
-                    <h2>Comparison between filtered and unfiltered signals</h2>
-                    <i class="fa fa-cog"></i>
-                </div>
-                <div class="widget-content">
-                    <img
-                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/87118/sample-data-1.png"
-                    />
-                </div>
-            </div>
-            <div class="widget-box sample-widget">
-                <div class="widget-header">
-                    <h2>Signal reconstruction through an inverse SWT</h2>
-                    <i class="fa fa-cog"></i>
-                </div>
-                <div class="widget-content">
-                    <img
-                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/87118/sample-data-1.png"
-                    />
-                </div>
-            </div>
-            <div class="widget-box sample-widget">
-                <div class="widget-header">
-                    <h2>Smoothed Signal</h2>
-                    <i class="fa fa-cog"></i>
-                </div>
-                <div class="widget-content">
-                    <img
-                        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/87118/sample-data-1.png"
-                    />
-                </div>
-            </div>
-            <div class="widget-box sample-widget">
-                <div class="widget-header">
-                    <h2>Extracted Electrodermal Response (EDR) Features</h2>
-                    <i class="fa fa-cog"></i>
-                </div>
-                <div class="widget-content">
-                    <ul>
-                        <li>EDR Amplitude: {{ edr_amplitude | safe }}</li>
-                        <li>EDR Rising Time (Rise Time): {{ edr_rising_time | safe }}</li>
-                        <li>EDR Response Peak (Peak Time): {{ edr_response_peak | safe }}</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="widget-box sample-widget">
-                <div class="widget-header">
-                    <h2>Extracted Features to Latency and Recovery Time</h2>
-                    <i class="fa fa-cog"></i>
-                </div>
-                <div class="widget-content">
-                    <ul>
-                        <li>Latency to Stimulus: {{ latency_to_stimulus | safe }}</li>
-                        <li>Recovery Time to 50% Amplitude: {{ recovery_time_50 | safe }}</li>
-                        <li>Recovery Time to 63% Amplitude: {{ recovery_time_63 | safe }}</li>
-                    </ul>
+                <div class="widget-box sample-widget">
+                    <div class="widget-header">
+                        <h2>Extracted Features to Latency and Recovery Time</h2>
+                        <i class="fa fa-cog"></i>
+                    </div>
+                    <div class="widget-content">
+                        <ul>
+                            <li>Latency to Stimulus: {{ latency_to_stimulus | safe }}</li>
+                            <li>Recovery Time to 50% Amplitude: {{ recovery_time_50 | safe }}</li>
+                            <li>Recovery Time to 63% Amplitude: {{ recovery_time_63 | safe }}</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <script src="{{ url_for('static', filename='main.js') }}"></script>
 </body>
 </html>

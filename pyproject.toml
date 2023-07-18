@@ -33,6 +33,7 @@ coverage = "^7.2.7"
 pytest-cov = "^4.1.0"
 werkzeug = "^2.3.6"
 psycopg2-binary = "^2.9.6"
+pylsl = "^1.16.1"
 
 
 [tool.poetry.group.dev.dependencies]

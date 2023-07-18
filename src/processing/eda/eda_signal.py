@@ -1,23 +1,27 @@
+import threading
+import time
 from copy import deepcopy
 from numbers import Number
 
 import numpy as np
+import pylsl
+from bokeh.models import ColumnDataSource
+from bokeh.plotting._figure import figure
 from flask import Markup
 from numpy import argmax, array, average, diff, max, reshape, sort, sqrt, where
-from processing.signal import Signal
 from pywt import iswt, swt
 from scipy.stats import norm
 from sklearn.mixture import GaussianMixture
-from bokeh.plotting import figure
-from bokeh.models import ColumnDataSource
 
 import biosignalsnotebooks as bsnb
+from processing.signal import Signal
+
 
 class EDASignal(Signal):
-    def __init__(self, signal_data, sampling_rate):
-        super().__init__(signal_data, sampling_rate)
-        self.original_signal_data = signal_data
-        self.signal_data_history = [signal_data]
+    def __init__(self, header, signal_data, sampling_rate):
+        super().__init__(header, signal_data, sampling_rate)
+        self.original_signal_data = signal_data # Current state of signal data
+        self.signal_data_history = [signal_data] # History of signal data preprocessing steps
         self.features = {}  # Empty dictionary to store the extracted features
 
     def preprocess_signal(self) -> "EDASignal":
@@ -40,7 +44,7 @@ class EDASignal(Signal):
     def _apply_lowpass_filter(self):
         print("Applying 2nd order Butterworth lowpass filter...")
         self.signal_data = bsnb.lowpass(self.signal_data, 35, order=2, fs=self.sampling_rate, use_filtfilt=True)
-        self._update_signal_data_history()
+        #self._update_signal_data_history()
     
     def _apply_wavelet_decomposition(self):
         print("Applying SWT 8th level decomposition using 'Haar' mother wavelet...")
@@ -89,20 +93,22 @@ class EDASignal(Signal):
         print("Applying inverse SWT to reconstruct the signal...")
         rec_signal = iswt(self.swt_coeffs, "haar")
         self.signal_data = rec_signal
+        self._update_signal_data_history()
     
     def _apply_moving_average_smoothing(self):
         print("Applying moving average smoothing...")
         window_size = int(self.sampling_rate * 3)
         self.signal_data = bsnb.smooth(self.signal_data, window_size)
+        #self._update_signal_data_history()
     
     def _rescale_signal(self):
         print("Rescaling the signal...")
         scaling_factor = max(self.signal_data) / max(self.original_signal_data)
         self.signal_data = self.signal_data * scaling_factor
+        #self._update_signal_data_history()
     
     def _update_signal_data_history(self):
         self.signal_data_history.append(deepcopy(self.signal_data))
-        
 
     def extract_features(self):
         print("Extracting features...")
@@ -154,16 +160,15 @@ class EDASignal(Signal):
     def get_visualization(self, step_index):
         # Access the signal history
         if step_index < len(self.signal_data_history):
+            # Generating time for time axis
+            time = bsnb.generate_time(self.signal_data_history[step_index], self.sampling_rate)
             signal_data = self.signal_data_history[step_index]
         else:
             # Handle invalid index
             return None
 
         # Create a Bokeh figure
-        p = figure(title=f"EDA Signal - Step {step_index+1}", x_axis_label="Time", y_axis_label="Amplitude")
-
-        # Prepare data for visualization
-        time = range(len(signal_data))
+        p = figure(title=f"EDA Signal - Step {step_index + 1}", x_axis_label="Time", y_axis_label="Amplitude")
 
         # Create a ColumnDataSource for Bokeh
         source = ColumnDataSource(data={"time": time, "amplitude": signal_data})
@@ -182,3 +187,22 @@ class EDASignal(Signal):
                 html += f"<li><span class='feature-name'>{feature}:</span> <span class='feature-value'>None</span></li>"
         html += "</ul>"
         return html
+    
+    def start_data_streaming(self):
+        # Create a new thread for data streaming
+        thread = threading.Thread(target=self._data_streaming_thread)
+        thread.start()
+
+    def _data_streaming_thread(self):
+        # Create a new LSL outlet
+        stream_info = pylsl.StreamInfo('EDAStream', 'EDA', 1, self.sampling_rate, pylsl.cf_float32, 'EDAStreamID')
+        outlet = pylsl.StreamOutlet(stream_info)
+
+        # Send the signal data in chunks
+        chunk_size = 1000
+        for i in range(0, len(self.signal_data), chunk_size):
+            chunk = self.signal_data[i:i + chunk_size]
+            outlet.push_chunk(chunk)
+
+            # Sleep to simulate real-time streaming
+            time.sleep(chunk_size / self.sampling_rate)

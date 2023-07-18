@@ -1,7 +1,8 @@
 import biosignalsnotebooks as bsnb
 
 class Signal:
-    def __init__(self, signal_data, sampling_rate):
+    def __init__(self, header, signal_data, sampling_rate):
+        self.header = header
         self.signal_data = signal_data
         self.sampling_rate = sampling_rate
         
@@ -27,7 +28,5 @@ class Signal:
         signal_us = bsnb.raw_to_phy("EDA", "bioplux", signal, 10, "uS")
 
         # Create and return a Signal instance with the loaded and processed signal
-        signal_instance = cls(signal_us, sr)
-        signal_instance.signal_data = signal_us
-        signal_instance.sampling_rate = sr
+        signal_instance = cls(header, signal_us, sr)
         return signal_instance

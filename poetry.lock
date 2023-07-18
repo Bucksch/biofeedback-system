@@ -1977,6 +1977,18 @@ files = [
 plugins = ["importlib-metadata"]
 
 [[package]]
+name = "pylsl"
+version = "1.16.1"
+description = "Python interface to the Lab Streaming Layer"
+optional = false
+python-versions = "*"
+files = [
+    {file = "pylsl-1.16.1-py2.py3-none-any.whl", hash = "sha256:d6c34b5ba02883274eea9de2af9ebe4484991bb8eeb0e18f52a8f5acde67070e"},
+    {file = "pylsl-1.16.1-py2.py3-none-win32.whl", hash = "sha256:ade45742631e1ce453146de0667c4543b48a789b555b9da3b170927e230e7f79"},
+    {file = "pylsl-1.16.1-py2.py3-none-win_amd64.whl", hash = "sha256:00a79dd5e62a80ad0bcb7e425d168c169d6dd70cb57a7b03dd8ab686c94d04f3"},
+]
+
+[[package]]
 name = "pyparsing"
 version = "3.0.9"
 description = "pyparsing module - Classes and methods to define and execute parsing grammars"
@@ -2996,4 +3008,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.6"
-content-hash = "54bd6a48a84721566e14aaa91770b5d42f862a1195db9ef3a62774e6bf61c684"
+content-hash = "9461e62c39a4d0eb48d15bed6d12b6808c5d5ff80c44365254bccaecb7f6d04c"
