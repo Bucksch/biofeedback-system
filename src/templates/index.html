@@ -4,7 +4,9 @@
     <title>Dashboard</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.js"></script>
     <script src="{{ bokeh_js | safe}}" type="text/javascript"></script>
+    <link rel="stylesheet" href="{{ bokeh_css | safe }}">
 </head>
 <body>
     <!-- Sidebar -->
@@ -62,7 +64,7 @@
                 <p>Positive Information Systems Seminar: Design Bio-Feedback System to Improve Economic Decision-Making Processes.</p>
             </div>
             <div class="row">
-                {% for scatter_div, scatter_script in scatter_divs | pair(scatter_scripts) %}
+                {% for div, script in divs | pair(scripts) %}
                 <div class="widget-box sample-widget">
                     <div class="widget-header">
                         <h2>Step {{ loop.index }}</h2>
@@ -70,12 +72,24 @@
                     </div>
                     <div class="widget-content">
                         <div class="bokeh-plot">
-                            {{ scatter_div | safe }}
+                            {{ div | safe }}
                         </div>
-                        {{ scatter_script | safe }}
+                        {{ script | safe }}
                     </div>
                 </div>
                 {% endfor %}
+                <div class="widget-box sample-widget">
+                    <div class="widget-header">
+                        <h2>Simulated Data Stream</h2>
+                        <i class="fa fa-cog"></i>
+                    </div>
+                    <div class="widget-content">
+                        <div id="stream-plot">
+                            {{ stream_div | safe }}
+                        </div>
+                        {{ stream_script | safe }}
+                    </div>
+                </div>
                 <div class="widget-box sample-widget">
                     <div class="widget-header">
                         <h2>Extracted Electrodermal Response (EDR) Features</h2>
@@ -105,5 +119,16 @@
             </div>
         </div>
     </section>
+    <script>
+        // Connect to the SocketIO server
+        var socket = io.connect('http://' + document.domain + ':' + location.port + '/');
+        
+        // Handle the 'update_plot' event received from the server
+        socket.on('update_plot', function(data) {
+          // Update the plot with the received script and div components
+          document.getElementById('stream-plot').innerHTML = data.stream_div;
+          eval(data.stream_script);
+        });
+    </script>
 </body>
 </html>

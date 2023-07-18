@@ -4,7 +4,6 @@ from copy import deepcopy
 from numbers import Number
 
 import numpy as np
-import pylsl
 from bokeh.models import ColumnDataSource
 from bokeh.plotting._figure import figure
 from flask import Markup
@@ -12,10 +11,13 @@ from numpy import argmax, array, average, diff, max, reshape, sort, sqrt, where
 from pywt import iswt, swt
 from scipy.stats import norm
 from sklearn.mixture import GaussianMixture
+from bokeh.embed import components
+from bokeh.plotting import curdoc
 
 import biosignalsnotebooks as bsnb
 from processing.signal import Signal
-
+from flask_socketio import emit
+from flask import current_app
 
 class EDASignal(Signal):
     def __init__(self, header, signal_data, sampling_rate):
@@ -156,7 +158,17 @@ class EDASignal(Signal):
         print("\nExtracted EDA-Features:")
         for feature, value in self.features.items():
             print(f"{feature}: {value}")
-        
+
+    def get_features_html(self):
+        html = "<ul class='feature-list'>"
+        for feature, value in self.features.items():
+            if value is not None:
+                html += f"<li><span class='feature-name'>{feature}:</span> <span class='feature-value'>{value:.2f}</span></li>"
+            else:
+                html += f"<li><span class='feature-name'>{feature}:</span> <span class='feature-value'>None</span></li>"
+        html += "</ul>"
+        return html
+    
     def get_visualization(self, step_index):
         # Access the signal history
         if step_index < len(self.signal_data_history):
@@ -174,35 +186,43 @@ class EDASignal(Signal):
         source = ColumnDataSource(data={"time": time, "amplitude": signal_data})
 
         # Add a line glyph to the figure
+        p.line(x="time", y="amplitude", source=source, line_color="#1B9783")
+        #p.sizing_mode="scale_width"
+
+        return p
+    
+    def start_data_streaming(self, socketio):
+        # Create a new thread for data streaming
+        thread = threading.Thread(target=self._data_streaming_thread, args=(socketio,))
+        thread.start()
+
+    def _data_streaming_thread(self, socketio):
+        # Simulate data streaming
+        chunk_size = 1000  # Adjust the chunk size as needed
+        delay = 1 / self.sampling_rate  # Delay between chunks based on sampling rate
+
+        for i in range(0, len(self.signal_data), chunk_size):
+            chunk = self.signal_data[i:i + chunk_size]
+
+            # Update the plot visualization with the current chunk of data
+            visualization = self.get_stream_visualization(chunk)
+            script, div = components(visualization)
+            socketio.emit('update_plot', {'stream_div': div, 'stream_script': script}, namespace='/')
+
+            # Sleep to simulate real-time streaming
+            time.sleep(delay)
+            
+    def get_stream_visualization(self, data_chunk):
+        # Generating time for time axis
+        time = bsnb.generate_time(data_chunk, self.sampling_rate)
+        
+        # Create a Bokeh figure
+        p = figure(title="Simulated Data Stream", x_axis_label="Time", y_axis_label="Amplitude")
+
+        # Create an empty data source for the stream plot
+        source = ColumnDataSource(data={"time": time, "amplitude": data_chunk})
+
+        # Add a line glyph to the figure using the empty data source
         p.line(x="time", y="amplitude", source=source)
 
         return p
-
-    def get_features_html(self):
-        html = "<ul class='feature-list'>"
-        for feature, value in self.features.items():
-            if value is not None:
-                html += f"<li><span class='feature-name'>{feature}:</span> <span class='feature-value'>{value:.2f}</span></li>"
-            else:
-                html += f"<li><span class='feature-name'>{feature}:</span> <span class='feature-value'>None</span></li>"
-        html += "</ul>"
-        return html
-    
-    def start_data_streaming(self):
-        # Create a new thread for data streaming
-        thread = threading.Thread(target=self._data_streaming_thread)
-        thread.start()
-
-    def _data_streaming_thread(self):
-        # Create a new LSL outlet
-        stream_info = pylsl.StreamInfo('EDAStream', 'EDA', 1, self.sampling_rate, pylsl.cf_float32, 'EDAStreamID')
-        outlet = pylsl.StreamOutlet(stream_info)
-
-        # Send the signal data in chunks
-        chunk_size = 1000
-        for i in range(0, len(self.signal_data), chunk_size):
-            chunk = self.signal_data[i:i + chunk_size]
-            outlet.push_chunk(chunk)
-
-            # Sleep to simulate real-time streaming
-            time.sleep(chunk_size / self.sampling_rate)

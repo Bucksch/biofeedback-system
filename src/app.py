@@ -5,13 +5,16 @@ from processing.eda.eda_signal import EDASignal
 from database import get_database_connection, insert_signal_data, insert_extracted_feature
 from bokeh.embed import components
 from bokeh.resources import CDN
+from flask_socketio import SocketIO, emit
+from bokeh.plotting import curdoc
 
 def pair(a, b):
     return zip(a, b)
 
 app = Flask(__name__)
-
 app.jinja_env.filters['pair'] = pair
+app.config['SECRET_KEY'] = 'your-secret-key'
+socketio = SocketIO(app, async_mode='gevent')
 
 # Load the signal data
 #signal_data_ecg = Signal.load_static_signal("../signals/staticopensignalsdata.txt", "CH1")
@@ -57,13 +60,16 @@ def index():
         visualizations.append(visualization)
         
     # Generate script and div components for each Bokeh plot
-    scatter_scripts = []
-    scatter_divs = []
+    scripts = []
+    divs = []
     for visualization in visualizations:
         if visualization is not None:
             script, div = components(visualization)
-            scatter_scripts.append(script)
-            scatter_divs.append(div)
+            scripts.append(script)
+            divs.append(div)
+            
+    # Generate script and div components for the simulated data stream plot
+    #stream_script, stream_div = components(eda.get_stream_visualization())
 
     return render_template(
         'index.html',
@@ -73,13 +79,20 @@ def index():
         latency_to_stimulus=eda_features.get('Latency to Stimulus (onset)'),
         recovery_time_50=eda_features.get('Recovery Time to 50% Amplitude'),
         recovery_time_63=eda_features.get('Recovery Time to 63% Amplitude'),
-        scatter_divs=scatter_divs,
-        scatter_scripts=scatter_scripts,
+        divs=divs,
+        scripts=scripts,
+        stream_div="",
+        stream_script="",
         bokeh_js=bokeh_js
     )
+    
+@socketio.on('connect', namespace='/')
+def test_connect():
+    if not hasattr(test_connect, 'already_connected'):
+        print('\nClient connected...\n')
+        test_connect.already_connected = True
+    # Start data streaming when a client connects
+    eda.start_data_streaming(socketio)
 
 if __name__ == '__main__':
-        # Start data streaming
-    eda.start_data_streaming()
-    
-    app.run(debug=True)
+    socketio.run(app, debug=True)

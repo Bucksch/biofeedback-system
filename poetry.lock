@@ -112,6 +112,22 @@ files = [
 ]
 
 [[package]]
+name = "bidict"
+version = "0.22.1"
+description = "The bidirectional mapping library for Python."
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "bidict-0.22.1-py3-none-any.whl", hash = "sha256:6ef212238eb884b664f28da76f33f1d28b260f665fc737b413b287d5487d1e7b"},
+    {file = "bidict-0.22.1.tar.gz", hash = "sha256:1e0f7f74e4860e6d0943a05d4134c63a2fad86f3d4732fb265bd79e4e856d81d"},
+]
+
+[package.extras]
+docs = ["furo", "sphinx", "sphinx-copybutton"]
+lint = ["pre-commit"]
+test = ["hypothesis", "pytest", "pytest-benchmark[histogram]", "pytest-cov", "pytest-xdist", "sortedcollections", "sortedcontainers", "sphinx"]
+
+[[package]]
 name = "biosignalsnotebooks"
 version = "0.6.11"
 description = "A Python package for supporting the external loading and processing of OpenSignals electrophysiological acquisitions."
@@ -622,6 +638,22 @@ dnspython = ">=2.0.0"
 idna = ">=2.0.0"
 
 [[package]]
+name = "eventlet"
+version = "0.33.3"
+description = "Highly concurrent networking library"
+optional = false
+python-versions = "*"
+files = [
+    {file = "eventlet-0.33.3-py2.py3-none-any.whl", hash = "sha256:e43b9ae05ba4bb477a10307699c9aff7ff86121b2640f9184d29059f5a687df8"},
+    {file = "eventlet-0.33.3.tar.gz", hash = "sha256:722803e7eadff295347539da363d68ae155b8b26ae6a634474d0a920be73cfda"},
+]
+
+[package.dependencies]
+dnspython = ">=1.15.0"
+greenlet = ">=0.3"
+six = ">=1.10.0"
+
+[[package]]
 name = "exceptiongroup"
 version = "1.1.2"
 description = "Backport of PEP 654 (exception groups)"
@@ -760,6 +792,21 @@ doc = ["Sphinx (==5.3.0)", "alabaster (==0.7.12)", "sphinx-issues (==3.0.1)"]
 test = ["Faker (==2.0.0)", "blinker", "invoke (==2.0.0)", "mock (==3.0.5)", "pytest (==7.0.1)", "pytest-benchmark (==3.4.1)", "pytest-cov (==4.0.0)", "pytest-flask (==1.2.0)", "pytest-mock (==3.6.1)", "pytest-profiling (==1.7.0)", "twine (==3.8.0)", "tzlocal"]
 
 [[package]]
+name = "flask-socketio"
+version = "5.3.4"
+description = "Socket.IO integration for Flask applications"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "Flask-SocketIO-5.3.4.tar.gz", hash = "sha256:1cbd379c9bf68ac37bcc4750d01708922fa6365d13a5447d3f8893792879410c"},
+    {file = "Flask_SocketIO-5.3.4-py3-none-any.whl", hash = "sha256:564acfb24dcc9545cdae536cde0323653d9b547069a925f11eeb132338aa71c0"},
+]
+
+[package.dependencies]
+Flask = ">=0.9"
+python-socketio = ">=5.0.2"
+
+[[package]]
 name = "flask-sqlalchemy"
 version = "3.0.5"
 description = "Add SQLAlchemy support to your Flask application."
@@ -849,6 +896,73 @@ type1 = ["xattr"]
 ufo = ["fs (>=2.2.0,<3)"]
 unicode = ["unicodedata2 (>=15.0.0)"]
 woff = ["brotli (>=1.0.1)", "brotlicffi (>=0.8.0)", "zopfli (>=0.1.4)"]
+
+[[package]]
+name = "gevent"
+version = "23.7.0"
+description = "Coroutine-based network library"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "gevent-23.7.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:add904a7ef960cd4e133e61eb7413982c5e4203928160be1c09752ac06a25e71"},
+    {file = "gevent-23.7.0-cp310-cp310-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:6bd9ea1b5fbdc7e5921a9e515f34a450eb3927a902253a33caedcce2d19d7d96"},
+    {file = "gevent-23.7.0-cp310-cp310-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:9c7c349aa23d67cf5cc3b2c87aaedcfead976d0577b1cfcd07ffeba63baba79c"},
+    {file = "gevent-23.7.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:c92b837b60e850c50fc6d723d1e363e786d37fd9d51e564e07df52ad5e8a86d4"},
+    {file = "gevent-23.7.0-cp310-cp310-musllinux_1_1_aarch64.whl", hash = "sha256:6a51a8e3cdaa6901e47d56f84cb5f92b1bf3deea920bce69cf7a245df16159ac"},
+    {file = "gevent-23.7.0-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:c1dba07207b15b371e50372369edf256a142cb5cdf8599849cbf8660327efa06"},
+    {file = "gevent-23.7.0-cp310-cp310-win_amd64.whl", hash = "sha256:34086bcc1252ae41e1cb81cf13c4a7678031595c12f4e9a1c3d0ab433f20826a"},
+    {file = "gevent-23.7.0-cp311-cp311-macosx_10_9_universal2.whl", hash = "sha256:5da07d65dfa23fe419c37cea110bf951b42af6bf3a1fff244043a75c9185dbd5"},
+    {file = "gevent-23.7.0-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:df4d7be3352126458cc818309ca6a3b678c209b1ae33e56b6975c6a8309f2068"},
+    {file = "gevent-23.7.0-cp311-cp311-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:76ca6f893953ab898ebbff5d772103318a85044e55d0bad401d6b49d71bb76e7"},
+    {file = "gevent-23.7.0-cp311-cp311-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:aeb1511cf0786152af741c47ee462dac81b57bbd1fbbe08ab562b6c8c9ad75ed"},
+    {file = "gevent-23.7.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:919423e803939726c99ab2d29ea46b8676af549cee72d263f2b24758ec607b2c"},
+    {file = "gevent-23.7.0-cp311-cp311-musllinux_1_1_aarch64.whl", hash = "sha256:cea93f4f77badbddc711620cca164ad75c74056603908e621a5ba1b97adbc39c"},
+    {file = "gevent-23.7.0-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:dec7b08daf08385fb281b81ec2e7e703243975d867f40ae0a8a3e30b380eb9ea"},
+    {file = "gevent-23.7.0-cp311-cp311-win_amd64.whl", hash = "sha256:f522b6b015f1bfa9d8d3716ddffb23e3d4a8933df3e4ebf0a29a65a9fa74382b"},
+    {file = "gevent-23.7.0-cp312-cp312-macosx_10_9_universal2.whl", hash = "sha256:746a1e12f280dab07389e6709164b1e1a6caaf50493ea5b1dcaa73cff005174c"},
+    {file = "gevent-23.7.0-cp312-cp312-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:5b230007a665d2cf5cf8878c9f56a2b8bacbdc4fe0235afc5269b71cd00528e5"},
+    {file = "gevent-23.7.0-cp312-cp312-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:a1d2f1e67d04fde47ca2deac89733df28ef3a7ec1d7359a79f57d4778cced16d"},
+    {file = "gevent-23.7.0-cp312-cp312-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:debc177e88a8c876cb1a4d974f985d03670177bdc61e1c084a8d525f1a50b12d"},
+    {file = "gevent-23.7.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:6b3dd449c80814357f6568eb095a2be2421b805d59fa97c65094707e04a181f9"},
+    {file = "gevent-23.7.0-cp312-cp312-musllinux_1_1_aarch64.whl", hash = "sha256:769e8811ded08fe7d8b09ad8ebb72d47aecc112411e0726e7296b7ed187ed629"},
+    {file = "gevent-23.7.0-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:11b9bb0bce45170ff992760385a86e6955ccb88dba4a82a64d5ce9459290d8d6"},
+    {file = "gevent-23.7.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:3e0d76a7848726e0646324a1adc011355dcd91875e7913badd1ada2e5eeb8a6e"},
+    {file = "gevent-23.7.0-cp38-cp38-musllinux_1_1_x86_64.whl", hash = "sha256:a226b42cb9a49580ca7729572a4f8289d1fa28cd2529c9f4eed3e14b995d1c9c"},
+    {file = "gevent-23.7.0-cp38-cp38-win32.whl", hash = "sha256:1234849b0bc4df560924aa92f7c01ca3f310677735fb508a2b0d7a61bb946916"},
+    {file = "gevent-23.7.0-cp38-cp38-win_amd64.whl", hash = "sha256:a8f62e8d37913512823923e05607a296389aeb50ccca8a271ae7cedb5b17faeb"},
+    {file = "gevent-23.7.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:369241d1a6a3fe3ef4eba454b71e0168026560c5344fc4bc37196867041982ac"},
+    {file = "gevent-23.7.0-cp39-cp39-musllinux_1_1_x86_64.whl", hash = "sha256:94b013587f7c4697d620c129627f7b12d7d9f6e40ab198635891ca2098cd8556"},
+    {file = "gevent-23.7.0-cp39-cp39-win32.whl", hash = "sha256:83b6d61a8e9da25edb304ca7fba19ee57bb1ffa801f9df3e668bfed7bb8386cb"},
+    {file = "gevent-23.7.0-cp39-cp39-win_amd64.whl", hash = "sha256:8c284390f0f6d0b5be3bf805fa8e0ae1329065f2b0ac5af5423c67183197deb8"},
+    {file = "gevent-23.7.0.tar.gz", hash = "sha256:d0d3630674c1b344b256a298ab1ff43220f840b12af768131b5d74e485924237"},
+]
+
+[package.dependencies]
+cffi = {version = ">=1.12.2", markers = "platform_python_implementation == \"CPython\" and sys_platform == \"win32\""}
+greenlet = {version = ">=2.0.0", markers = "platform_python_implementation == \"CPython\" and python_version < \"3.12\""}
+"zope.event" = "*"
+"zope.interface" = "*"
+
+[package.extras]
+dnspython = ["dnspython (>=1.16.0,<2.0)", "idna"]
+docs = ["furo", "repoze.sphinx.autointerface", "sphinx", "sphinxcontrib-programoutput", "zope.schema"]
+monitor = ["psutil (>=5.7.0)"]
+recommended = ["cffi (>=1.12.2)", "dnspython (>=1.16.0,<2.0)", "idna", "psutil (>=5.7.0)"]
+test = ["cffi (>=1.12.2)", "coverage (>=5.0)", "dnspython (>=1.16.0,<2.0)", "idna", "objgraph", "psutil (>=5.7.0)", "requests", "setuptools"]
+
+[[package]]
+name = "gevent-websocket"
+version = "0.10.1"
+description = "Websocket handler for the gevent pywsgi server, a Python network library"
+optional = false
+python-versions = "*"
+files = [
+    {file = "gevent-websocket-0.10.1.tar.gz", hash = "sha256:7eaef32968290c9121f7c35b973e2cc302ffb076d018c9068d2f5ca8b2d85fb0"},
+    {file = "gevent_websocket-0.10.1-py3-none-any.whl", hash = "sha256:17b67d91282f8f4c973eba0551183fc84f56f1c90c8f6b6b30256f31f66f5242"},
+]
+
+[package.dependencies]
+gevent = "*"
 
 [[package]]
 name = "greenlet"
@@ -2071,6 +2185,22 @@ files = [
 cli = ["click (>=5.0)"]
 
 [[package]]
+name = "python-engineio"
+version = "4.5.1"
+description = "Engine.IO server and client for Python"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "python-engineio-4.5.1.tar.gz", hash = "sha256:b167a1b208fcdce5dbe96a61a6ca22391cfa6715d796c22de93e3adf9c07ae0c"},
+    {file = "python_engineio-4.5.1-py3-none-any.whl", hash = "sha256:67a675569f3e9bb274a8077f3c2068a8fe79cbfcb111cf31ca27b968484fe6c7"},
+]
+
+[package.extras]
+asyncio-client = ["aiohttp (>=3.4)"]
+client = ["requests (>=2.21.0)", "websocket-client (>=0.54.0)"]
+docs = ["sphinx"]
+
+[[package]]
 name = "python-magic"
 version = "0.4.27"
 description = "File type identification using libmagic"
@@ -2092,6 +2222,25 @@ files = [
     {file = "python_magic_bin-0.4.14-py2.py3-none-win32.whl", hash = "sha256:34a788c03adde7608028203e2dbb208f1f62225ad91518787ae26d603ae68892"},
     {file = "python_magic_bin-0.4.14-py2.py3-none-win_amd64.whl", hash = "sha256:90be6206ad31071a36065a2fc169c5afb5e0355cbe6030e87641c6c62edc2b69"},
 ]
+
+[[package]]
+name = "python-socketio"
+version = "5.8.0"
+description = "Socket.IO server and client for Python"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "python-socketio-5.8.0.tar.gz", hash = "sha256:e714f4dddfaaa0cb0e37a1e2deef2bb60590a5b9fea9c343dd8ca5e688416fd9"},
+    {file = "python_socketio-5.8.0-py3-none-any.whl", hash = "sha256:7adb8867aac1c2929b9c1429f1c02e12ca4c36b67c807967393e367dfbb01441"},
+]
+
+[package.dependencies]
+bidict = ">=0.21.0"
+python-engineio = ">=4.3.0"
+
+[package.extras]
+asyncio-client = ["aiohttp (>=3.4)"]
+client = ["requests (>=2.21.0)", "websocket-client (>=0.54.0)"]
 
 [[package]]
 name = "pytz"
@@ -2959,6 +3108,24 @@ files = [
 ]
 
 [[package]]
+name = "zope-event"
+version = "5.0"
+description = "Very basic event publishing system"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "zope.event-5.0-py3-none-any.whl", hash = "sha256:2832e95014f4db26c47a13fdaef84cef2f4df37e66b59d8f1f4a8f319a632c26"},
+    {file = "zope.event-5.0.tar.gz", hash = "sha256:bac440d8d9891b4068e2b5a2c5e2c9765a9df762944bda6955f96bb9b91e67cd"},
+]
+
+[package.dependencies]
+setuptools = "*"
+
+[package.extras]
+docs = ["Sphinx"]
+test = ["zope.testrunner"]
+
+[[package]]
 name = "zope-interface"
 version = "6.0"
 description = "Interfaces for Python"
@@ -3008,4 +3175,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "3.10.6"
-content-hash = "9461e62c39a4d0eb48d15bed6d12b6808c5d5ff80c44365254bccaecb7f6d04c"
+content-hash = "826dac234f3387148d81e9616915721362a151240993071e13b80fd8a17f40eb"
