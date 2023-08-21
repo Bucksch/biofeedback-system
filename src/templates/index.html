@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.3.1/socket.io.js"></script>
     <script src="{{ bokeh_js | safe}}" type="text/javascript"></script>
+    <script src="https://cdn.bokeh.org/bokeh/release/bokeh.min.js"></script>
     <link rel="stylesheet" href="{{ bokeh_css | safe }}">
 </head>
 <body>
@@ -84,10 +85,7 @@
                         <i class="fa fa-cog"></i>
                     </div>
                     <div class="widget-content">
-                        <div id="stream-plot">
-                            {{ stream_div | safe }}
-                        </div>
-                        {{ stream_script | safe }}
+                        <div id="stream-plot"></div>
                     </div>
                 </div>
                 <div class="widget-box sample-widget">
@@ -122,12 +120,37 @@
     <script>
         // Connect to the SocketIO server
         var socket = io.connect('http://' + document.domain + ':' + location.port + '/');
-        
+
+        // Create a new Bokeh streaming plot
+        var streamPlot = Bokeh.Plotting.figure({
+            title: "Simulated Data Stream",
+            x_axis_label: "Time",
+            y_axis_label: "Amplitude"
+        });
+
+        console.log(streamPlot)
+        // Create a ColumnDataSource for the stream plot
+        var streamSource = new Bokeh.ColumnDataSource({ data: { x: [], y: [] } });
+
+        // Add a line glyph to the stream plot
+        streamPlot.line({
+            field: "x",
+            transform: streamSource,
+        }, {
+            field: "y",
+            transform: streamSource,
+            line_color: "#1B9783",
+        });
+
+        // Render the stream plot
+        Bokeh.Plotting.show(streamPlot, document.getElementById("stream-plot"));
+
         // Handle the 'update_plot' event received from the server
-        socket.on('update_plot', function(data) {
-          // Update the plot with the received script and div components
-          document.getElementById('stream-plot').innerHTML = data.stream_div;
-          eval(data.stream_script);
+        socket.on("update_plot", function(data) {
+            console.log("Hallo Welt")
+            // Update the stream plot with the received data
+            streamSource.data = { x: data.x, y: data.y };
+            Bokeh.Plotting.show(streamPlot);
         });
     </script>
 </body>

@@ -67,9 +67,6 @@ def index():
             script, div = components(visualization)
             scripts.append(script)
             divs.append(div)
-            
-    # Generate script and div components for the simulated data stream plot
-    #stream_script, stream_div = components(eda.get_stream_visualization())
 
     return render_template(
         'index.html',
@@ -81,18 +78,14 @@ def index():
         recovery_time_63=eda_features.get('Recovery Time to 63% Amplitude'),
         divs=divs,
         scripts=scripts,
-        stream_div="",
-        stream_script="",
         bokeh_js=bokeh_js
     )
-    
+
 @socketio.on('connect', namespace='/')
 def test_connect():
     if not hasattr(test_connect, 'already_connected'):
         print('\nClient connected...\n')
         test_connect.already_connected = True
-    # Start data streaming when a client connects
-    eda.start_data_streaming(socketio)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
