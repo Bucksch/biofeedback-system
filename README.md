@@ -1,6 +1,6 @@
 # Project Source Code Structure
 
-This directory structure outlines the organization of your project's source code (`src` directory). Here's a brief description of each directory and its contents:
+The following directory structure outlines the organization of this project's source code (`src` directory).
 
 1. **processing:** Contains modules related to signal loading and processing functionality.
 
@@ -33,4 +33,4 @@ This directory structure outlines the organization of your project's source code
 
 6. **database.py:** Manages database interactions, including connecting to PostgreSQL and data insertion.
 
-Each component in this structure serves a specific purpose, contributing to the organization and functionality of your software application.
+Each component in this structure serves a specific purpose, contributing to the organization and functionality of this software prototype.
