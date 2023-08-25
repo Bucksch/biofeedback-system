@@ -1,3 +1,9 @@
+// Information: This code has mainly been created in order to scale the bokeh plots into the containers and have a data streaming bokeh plot, which didn't work out in the end.
+// This is dead code.
+
+// Last modified: 25.08.2023
+// Author: Jonas Bucksch
+
 function toggleMenu() {
     const sidebar = document.querySelector('.sidebar');
     sidebar.classList.toggle('active');
