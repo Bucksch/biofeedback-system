@@ -2,9 +2,9 @@
 
 This directory structure outlines the organization of your project's source code (`src` directory). Here's a brief description of each directory and its contents:
 
-1. **processing:** Contains modules related to signal processing functionality.
+1. **processing:** Contains modules related to signal loading and processing functionality.
 
-   - **ecg:** Modules for processing electrocardiogram (ECG) signals.
+   - **ecg:** Future modules for processing electrocardiogram (ECG) signals. Nothing meaningful implemented yet.
 
      - **ecg_signal.py:** Handles ECG signal processing and analysis.
 
