@@ -13,7 +13,7 @@ def pair(a, b):
 
 app = Flask(__name__)
 app.jinja_env.filters['pair'] = pair
-app.config['SECRET_KEY'] = 'your-secret-key'
+app.config['SECRET_KEY'] = 'your-secret-key' #should be set correctly here for security reasons
 socketio = SocketIO(app, async_mode='gevent')
 
 # Load the signal data

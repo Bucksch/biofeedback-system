@@ -61,7 +61,7 @@ Poetry will set up a virtual environment for your project and install the necess
 
 ## Step 3: PostgreSQL Server Setup
 
-Make sure your PostgreSQL server is running. You'll need the database name, username, and password for your configuration and, if you want to run the prototype out-of-the-box, a table "eda_parameters" with three columns feature, value, created_at. Update the `get_database_connection()` function in `database.py` with your database details.
+Make sure your PostgreSQL server is installed and running. You'll need the database name, username, and password for your configuration and, if you want to run the prototype out-of-the-box, a table "eda_parameters" with three columns feature, value, created_at. Update the `get_database_connection()` function in `database.py` with your database details.
 
 To start the PostgreSQL Server, run:
 

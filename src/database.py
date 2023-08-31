@@ -13,7 +13,7 @@ def get_database_connection():
         )
         return connection
     except psycopg2.Error as error:
-        # Handle the exception (e.g., log the error)
+        # Handle exception (log error)
         print("Error connecting to the database:", error)
 
 def insert_signal_data(connection, data_time, value):
@@ -27,7 +27,7 @@ def insert_signal_data(connection, data_time, value):
         connection.commit()
     except psycopg2.Error as error:
         connection.rollback()
-        # Handle the exception (e.g., log the error)
+        # Handle exception (log error)
         print("Error inserting signal data:", error)
         
 def insert_extracted_feature(connection, feature, value):
@@ -41,5 +41,5 @@ def insert_extracted_feature(connection, feature, value):
         connection.commit()
     except psycopg2.Error as error:
         connection.rollback()
-        # Handle the exception (e.g., log the error)
+        # Handle exception (log error)
         print("Error inserting extracted feature:", error)
